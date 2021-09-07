@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="portal_membership_register_sidebar" name="Membership register link"
+              inherit_id="climbing_gym_website.portal_membership_sidebar">
+        <xpath expr="//div[@id='o_portal_my_membership_details']" position="inside">
+            <div class="o_my_membership_signup" t-if="not membership">
+                <a role="button" href="/my/membership_registration/create" class="btn btn-sm btn-link">
+                    <i class="fa fa-user-plus"/>Become a member
+                </a>
+            </div>
+        </xpath>
+    </template>
+</odoo>
