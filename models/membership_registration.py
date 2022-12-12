@@ -17,21 +17,24 @@ class MembershipRegistration(models.Model):
     _description = 'Membership registration'
     _inherit = ['mail.thread']
 
-    status_selection = [('pending', "Pending"), ('approve', "Approved"), ('cancel', "Cancelled")]
+    status_selection = [('pending', "Pending"), ('approved', "Approved"), ('cancel', "Cancelled")]
 
     civil_status_selection = [('married', "Married"), ('single', "Single"), ('other', "Other")]
 
-    name = fields.Char('Name', compute='_generate_name'
-                       )
-    description = fields.Char('Description')
+    name = fields.Char('Name', compute='_generate_name')
 
-    contact_firstname = fields.Char('Requester firstname')
+    obs = fields.Char('Observations')
 
-    contact_lastname = fields.Char('Requester lastname')
+    # contact_firstname = fields.Char('Requester firstname')
+
+    # contact_lastname = fields.Char('Requester lastname')
 
     partner_id = fields.Many2one('res.partner', string='Member', required=True, index=True, track_visibility=True)
 
     membership_id = fields.Many2one('climbing_gym.membership', string='Membership type', index=True,
+                                    track_visibility=True)
+
+    member_membership_id = fields.Many2one('climbing_gym.member_membership', string='Member membership', index=True,
                                     track_visibility=True)
 
     email = fields.Char('email')
@@ -72,11 +75,11 @@ class MembershipRegistration(models.Model):
     @api.multi
     def action_approve(self):
         for _map in self:
-            _map.state = 'approve'
+            _map.state = 'approved'
 
             # TODO: Check for missing data
 
-
+            # TODO: Check existing membership
 
     @api.multi
     def action_cancel(self):

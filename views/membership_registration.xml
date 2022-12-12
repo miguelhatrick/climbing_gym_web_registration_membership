@@ -1,49 +1,42 @@
 <odoo>
     <data>
-
-
         <!-- actions opening views on models -->
-        <record model="ir.actions.act_window" id="climbing_gym_school.course_list_action">
-            <field name="name">Courses</field>
-            <field name="res_model">climbing_gym_school.course</field>
+        <record model="ir.actions.act_window"
+                id="membership_registration_list_action">
+            <field name="name">Membership registrations</field>
+            <field name="res_model">climbing_gym.membership_registration</field>
             <field name="view_mode">tree,form</field>
         </record>
 
 
         <!-- explicit list view definition -->
-        <record model="ir.ui.view" id="climbing_gym_school.course_list_view">
-            <field name="name">Course list</field>
-            <field name="model">climbing_gym_school.course</field>
+        <record model="ir.ui.view" id="membership_registration_list_view">
+            <field name="name">Membership registration list</field>
+            <field name="model">climbing_gym.membership_registration</field>
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
-                    <field name='description'/>
-                    <field name="course_date"/>
-                    <field name="organizer_id"/>
-                    <!--          <field name="description"/>-->
+                    <field name="partner_id"/>
+                    <field name="membership_id"/>
                     <field name="state"/>
                 </tree>
             </field>
         </record>
 
 
-        <record model="ir.ui.view" id="course_form_view">
-            <field name="name">course.form</field>
-            <field name="model">climbing_gym_school.course</field>
+        <record model="ir.ui.view" id="membership_registration_form_view">
+            <field name="name">membership_registration.form</field>
+            <field name="model">climbing_gym.membership_registration</field>
             <field name="arch" type="xml">
                 <form string="Event Time Range">
                     <header>
-                        <field name="state" widget="statusbar" statusbar_visible="pending,active,closed,cancel"/>
-                        <button name="action_cancel" string="Cancel" states='active' type="object"
+                        <field name="state" widget="statusbar" statusbar_visible="pending,approved,cancel"/>
+                        <button name="action_cancel" string="Cancel" states='pending,approved' type="object"
                                 class="oe_highlight"/>
-                        <button name="action_active" string="Activate" states='pending' type="object"
+                        <button name="action_approve" string="Approve" states='pending' type="object"
                                 class="oe_highlight"/>
-                        <button name="action_close" string="Close" states='active' type="object"
+                        <button name="action_revive" string="Revive" states='approved,cancel' type="object"
                                 class="oe_highlight"/>
-                        <button name="action_revive" string="Revive" states='closed,cancel' type="object"
-                                class="oe_highlight"/>
-
-
                     </header>
                     <sheet>
                         <h1>
@@ -52,45 +45,26 @@
                         <notebook>
                             <page string="Data">
                                 <group col="2" colspan="2" string="">
-                                    <field name='name'/>
-                                    <field name='description'/>
-                                    <field name='obs'/>
-                                </group>
-                                <group col="2" colspan="2" string="Configuration">
-                                    <field name='course_date'/>
-                                    <field name='organizer_id'/>
-                                    <field name='course_type_id'
+                                    <field name='partner_id'
                                            options="{'no_quick_create':True,'no_create_edit':True}"
                                            domain="[('state','in',['active'])]"
-
-
                                     />
-                                    <field name='career_id'/>
-
-
-
-
-                                   <label for="main_id_number" string="Main Identification"/>
-                                <div>
-                                    <field name="main_id_category_id" options="{'no_open': True, 'no_create': True}" placeholder="Category" class="oe_inline"/> -
-                                    <field name="main_id_number" placeholder="Number" class="oe_inline"/>
-                                </div>
-
-
-
-
-
+                                    <field name='membership_id'
+                                           options="{'no_quick_create':True,'no_create_edit':True}"
+                                           domain="[('state','in',['active'])]"
+                                    />
+                                    <field name='member_membership_id'
+                                           options="{'no_quick_create':True,'no_create_edit':True}"
+                                           domain="[('state','in',['active'])]"
+                                    />
 
                                 </group>
-                                <group col="4" colspan="2" string="Students">
-                                    <field name='course_students_ids' widget="one2many_list" nolabel="1">
-
-                                        <tree string="Variants" editable="bottom">
-                                            <field name="name" />
-                                            <field name="student_id" />
-                                            <field name="state" />
-                                        </tree>
-                                    </field>
+                                <group col="2" colspan="2" string="Information">
+                                    <field name="civil_status"/>
+                                    <field name="birthdate"/>
+                                </group>
+                                <group col="2" colspan="2" string="Observations">
+                                    <field name='obs'/>
                                 </group>
 
                             </page>
@@ -104,12 +78,10 @@
             </field>
         </record>
 
-
         <!-- server action to the one above -->
-
-        <record model="ir.actions.server" id="climbing_gym_school.action_server">
-            <field name="name">climbing_gym server</field>
-            <field name="model_id" ref="model_climbing_gym_school_course"/>
+        <record model="ir.actions.server" id="climbing_gym_web_registration_membership.action_server">
+            <field name="name">climbing_gym registration</field>
+            <field name="model_id" ref="model_climbing_gym_membership_registration"/>
             <field name="state">code</field>
             <field name="code">
                 action = {
@@ -119,7 +91,6 @@
                 }
             </field>
         </record>
-
 
     </data>
 </odoo>

@@ -18,6 +18,7 @@
     # any module necessary for this one to work correctly
     'depends': ['base',
                 'mail',
+                'climbing_gym',
                 'climbing_gym_website',
                 ],
 
@@ -28,13 +29,13 @@
         # 'views/career.xml',
         # 'views/course.xml',
 
-        # 'views/course_type.xml',
+        # 'views/membership_registration.xml',
         # 'views/menu.xml',
 
-        'views/portal/portal_my_documents.xml',
+        #'views/portal/portal_my_documents.xml',
         # 'views/portal/portal_course.xml'
 
-        'views/portal/portal_layout_sidebar.xml'
+        #'views/portal/portal_layout_sidebar.xml'
 
     ],
     # only loaded in demonstration mode
